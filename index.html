@@ -1,0 +1,1155 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Мой день без рилсов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Golos+Text:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f6f3e9;
+  --paper-2:#efe9d8;
+  --grid:rgba(58,97,196,.16);
+  --ink:#1d3a8f;
+  --ink-soft:#3a56a8;
+  --ink-dim:#5c6c9c;
+  --margin:#c0392b;
+  --marker:#ffe14d;
+  --marker-ink:#4a3c00;
+  --card:#fffdf6;
+  --card-2:#ffffff;
+  --border:rgba(29,58,143,.22);
+  --border-strong:rgba(29,58,143,.4);
+  --green:#2f9e59;
+  --green-soft:rgba(47,158,89,.15);
+  --danger:#c0392b;
+  --danger-soft:rgba(192,57,43,.12);
+  --text:#232a4d;
+  --text-dim:#5a6386;
+  --shadow:0 2px 10px rgba(40,50,100,.08), 0 1px 2px rgba(40,50,100,.06);
+  --radius:14px;
+  --font-d:'Unbounded',system-ui,'Segoe UI',sans-serif;
+  --font-b:'Golos Text',system-ui,'Segoe UI',Arial,sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#141829;
+    --paper-2:#191f36;
+    --grid:rgba(120,150,255,.09);
+    --ink:#9db4ff;
+    --ink-soft:#b7c6ff;
+    --ink-dim:#8893c2;
+    --margin:#ff6b6b;
+    --marker:#8a6d00;
+    --marker-ink:#ffe9a3;
+    --card:#1c2240;
+    --card-2:#20274a;
+    --border:rgba(157,180,255,.18);
+    --border-strong:rgba(157,180,255,.32);
+    --green:#5fcf8c;
+    --green-soft:rgba(95,207,140,.16);
+    --danger:#ff8a80;
+    --danger-soft:rgba(255,138,128,.14);
+    --text:#e7ebff;
+    --text-dim:#aab2d9;
+    --shadow:0 2px 14px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:var(--font-b);
+  color:var(--text);
+  background-color:var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size:26px 26px;
+  min-height:100vh;
+  padding-bottom:calc(24px + env(safe-area-inset-bottom));
+  line-height:1.45;
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; scroll-behavior:auto !important;}
+}
+h1,h2,h3,h4{font-family:var(--font-d); color:var(--ink); margin:0 0 .4em; line-height:1.25;}
+a{color:var(--ink);}
+button{font-family:inherit;}
+.wrap{max-width:860px; margin:0 auto; padding:16px; padding-left:calc(16px + env(safe-area-inset-left)); padding-right:calc(16px + env(safe-area-inset-right));}
+
+:focus-visible{outline:3px solid var(--margin); outline-offset:2px; border-radius:4px;}
+
+/* ---------- Header ---------- */
+header.app-head{
+  position:relative;
+  padding:18px 18px 18px 22px;
+  margin-bottom:14px;
+  background:var(--card);
+  border:1px solid var(--border);
+  border-left:4px solid var(--margin);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+header.app-head h1{font-size:clamp(1.25rem,4.5vw,1.6rem); margin-bottom:2px;}
+header.app-head p.sub{margin:0 0 14px; color:var(--text-dim); font-size:.92rem;}
+.balance-row{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:12px;}
+.balance-card{
+  flex:1 1 160px;
+  background:var(--paper-2);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:10px 14px;
+}
+.balance-card .num{font-family:var(--font-d); font-size:1.5rem; color:var(--ink); font-weight:700;}
+.balance-card .lbl{font-size:.78rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.03em;}
+.switch-row{display:flex; flex-wrap:wrap; gap:16px;}
+.switch-group{display:flex; flex-direction:column; gap:4px;}
+.switch-group .glabel{font-size:.74rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:.04em;}
+.btn-group{display:inline-flex; border:1px solid var(--border-strong); border-radius:999px; overflow:hidden;}
+.btn-group button{
+  border:none; background:transparent; color:var(--text);
+  padding:7px 14px; font-size:.86rem; cursor:pointer; font-weight:600;
+}
+.btn-group button + button{border-left:1px solid var(--border-strong);}
+.btn-group button[aria-pressed="true"]{background:var(--ink); color:#fff;}
+@media (prefers-color-scheme: dark){ .btn-group button[aria-pressed="true"]{color:#101322;} }
+
+/* ---------- Tabs ---------- */
+nav.tabbar{display:flex; gap:6px; overflow-x:auto; margin-bottom:14px; padding-bottom:4px; -webkit-overflow-scrolling:touch;}
+nav.tabbar button{
+  flex:0 0 auto;
+  background:var(--card-2); border:1px solid var(--border); border-radius:10px;
+  padding:9px 14px; font-size:.86rem; font-weight:600; color:var(--text-dim); cursor:pointer; white-space:nowrap;
+}
+nav.tabbar button[aria-selected="true"]{
+  color:var(--ink); border-color:var(--border-strong);
+  background:linear-gradient(var(--card-2),var(--card-2)) padding-box, var(--marker) border-box;
+  box-shadow:inset 0 -3px 0 var(--marker);
+}
+section.tabpanel{display:none;}
+section.tabpanel.active{display:block; animation:fadein .18s ease;}
+@keyframes fadein{from{opacity:0; transform:translateY(3px);} to{opacity:1; transform:none;}}
+
+/* ---------- Cards / generic ---------- */
+.card{
+  background:var(--card); border:1px solid var(--border); border-radius:var(--radius);
+  padding:16px 18px; margin-bottom:14px; box-shadow:var(--shadow);
+}
+.card.ruled{border-left:4px solid var(--margin); padding-left:16px;}
+.muted{color:var(--text-dim); font-size:.88rem;}
+.pill{display:inline-block; font-size:.72rem; padding:2px 9px; border-radius:999px; border:1px solid var(--border-strong); color:var(--ink-soft); margin:0 4px 4px 0; background:var(--paper-2);}
+.pill.mom{border-color:#c678c6; color:#9b3fa0;}
+.pill.dad{border-color:#4f8ff0; color:#2f66c9;}
+.pill.famdad{border-color:#e0a23c; color:#a56a12;}
+@media (prefers-color-scheme: dark){
+  .pill.mom{color:#f0b3f2;} .pill.dad{color:#aecdff;} .pill.famdad{color:#ffd28a;}
+}
+
+/* ---------- Day selector ---------- */
+.day-select{display:flex; gap:6px; overflow-x:auto; padding:4px 2px 10px;}
+.day-select button{
+  flex:0 0 auto; width:52px; padding:8px 0 10px; border-radius:12px; border:1px solid var(--border);
+  background:var(--card-2); cursor:pointer; text-align:center; position:relative;
+}
+.day-select button .dname{display:block; font-size:.72rem; color:var(--text-dim); text-transform:uppercase;}
+.day-select button .dnum{display:block; font-family:var(--font-d); font-weight:700; font-size:1.05rem; color:var(--text);}
+.day-select button[aria-current="true"]{border-color:var(--ink); box-shadow:0 0 0 2px var(--ink) inset;}
+.day-select button.dadday{box-shadow:0 0 0 2px var(--green) inset;}
+.day-select button[aria-current="true"].dadday{box-shadow:0 0 0 2px var(--ink) inset, 0 0 0 4px var(--green) inset;}
+.day-select button .dot{position:absolute; top:4px; right:6px; width:6px; height:6px; border-radius:50%; background:var(--margin);}
+
+/* day header */
+.day-head{display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:8px; margin-bottom:10px;}
+.day-head h3{margin:0; font-size:1.1rem;}
+.day-head .loc{font-size:.84rem; font-weight:600; color:var(--ink-soft);}
+.progress-wrap{height:10px; border-radius:999px; background:var(--paper-2); border:1px solid var(--border); overflow:hidden; margin:10px 0;}
+.progress-bar{height:100%; background:linear-gradient(90deg,var(--ink),var(--green)); border-radius:999px; transition:width .25s ease;}
+.day-summary{display:flex; gap:14px; flex-wrap:wrap; font-size:.86rem; color:var(--text-dim); margin-bottom:4px;}
+.day-summary b{color:var(--text); font-family:var(--font-d); font-weight:700;}
+
+/* ---------- Timeline ---------- */
+.timeline{display:flex; flex-direction:column; gap:8px;}
+.task{
+  display:flex; gap:12px; align-items:flex-start;
+  background:var(--card-2); border:1px solid var(--border); border-radius:10px;
+  padding:10px 12px 10px 14px; border-left:3px solid var(--ink-dim);
+}
+.task.cat-school{border-left-color:#3a61c4;}
+.task.cat-english{border-left-color:#8a4fd1;}
+.task.cat-sport{border-left-color:var(--green);}
+.task.cat-free, .task.cat-screen, .task.cat-sleep{
+  border-left-style:dashed; border-left-color:var(--ink-dim); opacity:.88;
+}
+.task.cat-screen{position:relative;}
+.task.cat-screen::after{
+  content:""; position:absolute; inset:0; border-radius:10px; pointer-events:none;
+  background:var(--marker); opacity:.22; mix-blend-mode:multiply;
+}
+@media (prefers-color-scheme: dark){ .task.cat-screen::after{mix-blend-mode:screen; opacity:.18;} }
+.task .time{flex:0 0 76px; font-family:var(--font-d); font-weight:700; font-size:.74rem; color:var(--ink); line-height:1.3; padding-top:2px;}
+.task .body{flex:1; min-width:0;}
+.task .title-row{display:flex; justify-content:space-between; gap:8px; align-items:baseline; flex-wrap:wrap;}
+.task .title{font-weight:700; font-size:.95rem;}
+.task .pts{font-size:.78rem; color:var(--text-dim); white-space:nowrap;}
+.task .pts b{color:var(--ink);}
+.task .desc{font-size:.85rem; color:var(--text-dim); margin-top:2px;}
+.task .tags{margin-top:5px;}
+.task .chk{flex:0 0 auto; width:22px; height:22px; margin-top:3px; accent-color:var(--green); cursor:pointer;}
+.task.done{background:var(--green-soft);}
+.task.done .title{text-decoration:line-through; text-decoration-color:var(--green); opacity:.8;}
+
+/* ---------- Activity directions (tab 2) ---------- */
+.grid-cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px;}
+.dir-card h4{font-size:1rem; margin-bottom:6px;}
+.dir-card .where{font-size:.78rem; color:var(--ink-soft); margin-top:8px;}
+.dir-card ul{margin:4px 0 8px; padding-left:18px; font-size:.86rem;}
+.dir-card .agelbl{font-size:.72rem; text-transform:uppercase; color:var(--text-dim); letter-spacing:.03em; margin-top:6px;}
+
+/* ---------- Shop / rewards ---------- */
+.shop-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+.shop-item{background:var(--card-2); border:1px solid var(--border); border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; gap:6px;}
+.shop-item .price{font-family:var(--font-d); font-weight:700; color:var(--ink); font-size:1.1rem;}
+.shop-item .note{font-size:.78rem; color:var(--text-dim); flex:1;}
+.btn{
+  border:1px solid var(--border-strong); background:var(--ink); color:#fff; border-radius:8px;
+  padding:8px 12px; font-weight:600; font-size:.85rem; cursor:pointer;
+}
+.btn:disabled{opacity:.4; cursor:not-allowed;}
+.btn.secondary{background:transparent; color:var(--ink);}
+.btn.danger{background:var(--danger); border-color:var(--danger);}
+@media (prefers-color-scheme: dark){ .btn{color:#10132a;} .btn.secondary{color:var(--ink);} .btn.danger{color:#2a0905;} }
+
+.violation-item{display:flex; justify-content:space-between; align-items:center; gap:10px; background:var(--card-2); border:1px solid var(--border); border-radius:10px; padding:8px 12px; margin-bottom:8px;}
+.violation-item .v{color:var(--danger); font-weight:700; font-family:var(--font-d);}
+
+.history-row{display:flex; justify-content:space-between; gap:10px; font-size:.85rem; padding:7px 0; border-bottom:1px dashed var(--border);}
+.history-row:last-child{border-bottom:none;}
+.history-row .amt{font-weight:700; font-family:var(--font-d);}
+.history-row .amt.pos{color:var(--green);}
+.history-row .amt.neg{color:var(--danger);}
+.history-row .meta{color:var(--text-dim); font-size:.78rem;}
+
+/* ---------- Settings (tab 4) ---------- */
+.field-row{display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 14px;}
+.chip-check{display:inline-flex; align-items:center; gap:6px; border:1px solid var(--border-strong); border-radius:999px; padding:6px 12px; font-size:.85rem; cursor:pointer; background:var(--card-2);}
+.chip-check input{accent-color:var(--ink);}
+.radio-row label{display:inline-flex; align-items:center; gap:6px; margin:0 14px 8px 0; font-size:.88rem; cursor:pointer;}
+textarea{
+  width:100%; min-height:90px; border-radius:10px; border:1px solid var(--border-strong);
+  background:var(--card-2); color:var(--text); padding:10px 12px; font-family:inherit; font-size:.9rem; resize:vertical;
+}
+.note-item{background:var(--paper-2); border:1px solid var(--border); border-radius:10px; padding:10px 12px; margin-bottom:8px;}
+.note-item .who{font-size:.76rem; color:var(--ink-soft); font-weight:700; margin-bottom:3px;}
+.note-item .when{font-size:.72rem; color:var(--text-dim); font-weight:400; margin-left:6px;}
+
+/* ---------- Methodology (tab 5) ---------- */
+details.meth{background:var(--card); border:1px solid var(--border); border-radius:12px; margin-bottom:10px; overflow:hidden;}
+details.meth summary{cursor:pointer; padding:12px 16px; font-family:var(--font-d); font-weight:700; color:var(--ink); list-style:none;}
+details.meth summary::-webkit-details-marker{display:none;}
+details.meth summary::before{content:"▸ "; color:var(--margin);}
+details.meth[open] summary::before{content:"▾ "; }
+details.meth .body{padding:0 16px 14px; font-size:.9rem;}
+details.meth ol,details.meth ul{padding-left:20px; margin:6px 0;}
+details.meth table{width:100%; border-collapse:collapse; font-size:.84rem; margin:8px 0;}
+details.meth th,details.meth td{border:1px solid var(--border); padding:6px 8px; text-align:left;}
+details.meth th{background:var(--paper-2); color:var(--ink);}
+
+footer.app-foot{text-align:center; color:var(--text-dim); font-size:.76rem; padding:20px 0 6px;}
+
+/* ---------- Print ---------- */
+@media print{
+  body{background:#fff !important;}
+  nav.tabbar, .day-select, .chk, .btn, header .switch-row, .shop-item .btn, .no-print{display:none !important;}
+  section.tabpanel{display:block !important; page-break-after:always;}
+  .card{box-shadow:none; border:1px solid #999;}
+}
+
+/* narrow screens */
+@media (max-width:380px){
+  .wrap{padding:10px;}
+  header.app-head{padding:14px;}
+  .task .time{flex-basis:60px;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="app-head">
+    <h1>Мой день без рилсов</h1>
+    <p class="sub">Семейный планер дня для сына-школьника, живущего в двух домах</p>
+
+    <div class="balance-row">
+      <div class="balance-card"><div class="num" id="balTotal">0</div><div class="lbl">Всего баллов</div></div>
+      <div class="balance-card"><div class="num" id="balToday">0</div><div class="lbl">Заработано сегодня</div></div>
+    </div>
+
+    <div class="switch-row">
+      <div class="switch-group">
+        <span class="glabel">Возраст</span>
+        <div class="btn-group" id="ageSwitch">
+          <button data-age="y" aria-pressed="true">10–13</button>
+          <button data-age="o" aria-pressed="false">14–18</button>
+        </div>
+      </div>
+      <div class="switch-group">
+        <span class="glabel">Я</span>
+        <div class="btn-group" id="roleSwitch">
+          <button data-role="m" aria-pressed="true">Мама</button>
+          <button data-role="p" aria-pressed="false">Папа</button>
+          <button data-role="s" aria-pressed="false">Сын</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tabbar" role="tablist" aria-label="Разделы приложения" id="tabbar">
+    <button role="tab" id="tab-btn-sched" aria-controls="tab-sched" aria-selected="true">Распорядок</button>
+    <button role="tab" id="tab-btn-ideas" aria-controls="tab-ideas" aria-selected="false">Чем заняться</button>
+    <button role="tab" id="tab-btn-points" aria-controls="tab-points" aria-selected="false">Баллы и награды</button>
+    <button role="tab" id="tab-btn-parents" aria-controls="tab-parents" aria-selected="false">Мама и папа</button>
+    <button role="tab" id="tab-btn-meth" aria-controls="tab-meth" aria-selected="false">Методика</button>
+  </nav>
+
+  <!-- ===================== TAB 1: РАСПОРЯДОК ===================== -->
+  <section class="tabpanel active" id="tab-sched" role="tabpanel" aria-labelledby="tab-btn-sched">
+    <div class="card">
+      <div class="day-select" id="daySelect"></div>
+      <div class="day-head">
+        <div>
+          <h3 id="dayTitle">—</h3>
+          <div class="muted" id="dayType">—</div>
+        </div>
+        <div class="loc" id="dayLoc">—</div>
+      </div>
+      <div class="progress-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+      <div class="day-summary">
+        <span>Сделано: <b id="sumDone">0/0</b></span>
+        <span>Баллы дня: <b id="sumPts">0</b></span>
+        <span id="sumBonus"></span>
+      </div>
+    </div>
+
+    <div class="timeline" id="timeline"></div>
+  </section>
+
+  <!-- ===================== TAB 2: ЧЕМ ЗАНЯТЬСЯ ===================== -->
+  <section class="tabpanel" id="tab-ideas" role="tabpanel" aria-labelledby="tab-btn-ideas">
+    <div class="card ruled">
+      <h3>Куда направить сына</h3>
+      <p class="muted">Рекомендация: два постоянных занятия (спорт плюс творчество или техника) и английский. Желательно, чтобы одно из занятий было «папиным».</p>
+    </div>
+    <div class="grid-cards" id="ideasDirections"></div>
+
+    <div class="card ruled" style="margin-top:14px;">
+      <h3>Что делать вместе с папой</h3>
+    </div>
+    <div class="grid-cards" id="ideasDad"></div>
+
+    <div class="card ruled" style="margin-top:14px;">
+      <h3>Короткие дела «вместо телефона» (15–20 минут)</h3>
+      <p class="muted">Список рекомендуется распечатать и повесить в обоих домах.</p>
+      <div class="grid-cards" id="ideasShort"></div>
+    </div>
+  </section>
+
+  <!-- ===================== TAB 3: БАЛЛЫ И НАГРАДЫ ===================== -->
+  <section class="tabpanel" id="tab-points" role="tabpanel" aria-labelledby="tab-btn-points">
+    <div class="card ruled">
+      <h3>Начисление</h3>
+      <ul class="muted" style="margin:0;padding-left:18px;">
+        <li>Каждое дело приносит от 5 до 15 баллов.</li>
+        <li>Бонус +20 при выполнении не менее 80% дел дня.</li>
+        <li>Свободное время, сон и экранное время баллов не дают.</li>
+        <li>Будний день даёт примерно 150 баллов. Счёт общий для двух домов.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Магазин наград</h3>
+      <div class="shop-grid" id="shopGrid"></div>
+    </div>
+
+    <div class="card">
+      <h3>Нарушения</h3>
+      <p class="muted" id="fineLimitNote"></p>
+      <div id="violationsList"></div>
+    </div>
+
+    <div class="card">
+      <h3>История</h3>
+      <div id="historyList"></div>
+    </div>
+  </section>
+
+  <!-- ===================== TAB 4: МАМА И ПАПА ===================== -->
+  <section class="tabpanel" id="tab-parents" role="tabpanel" aria-labelledby="tab-btn-parents">
+    <div class="card ruled">
+      <h3>Общий доступ</h3>
+      <p class="muted">Общий доступ недоступен: данные хранятся только на этом устройстве. Это один самодостаточный HTML-файл без сервера, поэтому синхронизация между устройствами не выполняется — используйте общий телефон/компьютер или один и тот же файл в обоих домах.</p>
+    </div>
+
+    <div class="card">
+      <h3>Папины дни</h3>
+      <div class="muted" style="margin-bottom:6px;">Будни — в отмеченный день папа забирает сына из школы, ужинает с ним и привозит к маме к 21:00–21:30.</div>
+      <div class="field-row" id="dadWeekdayChips"></div>
+
+      <div class="muted" style="margin:10px 0 4px;">Выходные</div>
+      <div class="radio-row" id="wkDaysRadio"></div>
+
+      <div id="wkFreqBlock">
+        <div class="muted" style="margin:10px 0 4px;">Частота выходных</div>
+        <div class="radio-row" id="wkFreqRadio"></div>
+        <p class="muted" id="wkInfo"></p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Папина семья</h3>
+      <div class="radio-row" id="kidsRadio"></div>
+    </div>
+
+    <div class="card" id="notesCard">
+      <h3>Заметки для родителей</h3>
+      <div id="notesList"></div>
+      <div id="notesForm">
+        <textarea id="noteText" maxlength="2000" placeholder="Оценки, здоровье, договорённости, изменения планов..." aria-label="Текст заметки"></textarea>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+          <span class="muted" id="noteCounter">0 / 2000</span>
+          <button class="btn" id="addNoteBtn">Добавить заметку</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Сброс</h3>
+      <p class="muted">Обнуляет отметки, обмены и нарушения. Настройки и заметки сохраняются.</p>
+      <button class="btn danger" id="resetBtn">Сбросить прогресс</button>
+    </div>
+  </section>
+
+  <!-- ===================== TAB 5: МЕТОДИКА ===================== -->
+  <section class="tabpanel" id="tab-meth" role="tabpanel" aria-labelledby="tab-btn-meth">
+    <div id="methWrap"></div>
+  </section>
+
+  <footer class="app-foot">Мой день без рилсов · v1.0 · данные хранятся локально на этом устройстве</footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ===================== DATA MODEL ===================== */
+const STORE_KEY = "kid-planner-v2";
+const ROLE_KEY = "kp-role";
+
+function defaultState(){
+  return {
+    settings:{ age:"y", dadDays:[], wkDays:"none", wkFreq:"every", kids:"none" },
+    days:{},   // "YYYY-MM-DD": {done:[], pts:0}
+    log:[],    // {id,t,n,v,fine,by}
+    notes:[]   // {id,t,from,text}
+  };
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(!raw) return defaultState();
+    const parsed = JSON.parse(raw);
+    return Object.assign(defaultState(), parsed, {
+      settings: Object.assign(defaultState().settings, parsed.settings||{})
+    });
+  }catch(e){ return defaultState(); }
+}
+let saveFailed = false;
+function saveState(){
+  try{
+    localStorage.setItem(STORE_KEY, JSON.stringify(state));
+    saveFailed = false;
+  }catch(e){
+    saveFailed = true;
+    alert("Не удалось сохранить изменения. Попробуйте ещё раз или освободите память устройства.");
+  }
+}
+function loadRole(){ try{ return localStorage.getItem(ROLE_KEY) || "m"; }catch(e){ return "m"; } }
+function saveRole(r){ try{ localStorage.setItem(ROLE_KEY, r); }catch(e){} }
+
+let state = loadState();
+let role = loadRole();
+let selectedDateKey = null; // date key currently shown in timeline
+
+/* ===================== DATE HELPERS ===================== */
+function pad(n){ return n<10 ? "0"+n : ""+n; }
+function dkey(d){ return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+function startOfWeek(d){
+  const copy = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const dow = copy.getDay(); // 0 Sun..6 Sat
+  const diff = (dow === 0) ? -6 : (1 - dow); // Monday start
+  copy.setDate(copy.getDate() + diff);
+  return copy;
+}
+function addDays(d,n){ const c = new Date(d); c.setDate(c.getDate()+n); return c; }
+function isoWeekNumber(d){
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const day = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - day);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(),0,1));
+  return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+}
+const WD_SHORT = ["Пн","Вт","Ср","Чт","Пт","Сб","Вс"];
+const MONTHS = ["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
+function fmtLong(d){ return d.getDate()+" "+MONTHS[d.getMonth()]; }
+
+const today = new Date();
+const todayKey = dkey(today);
+
+/* ===================== SCHEDULE DATA ===================== */
+function t(start,end,title,pts,opts){
+  opts = opts || {};
+  return { start, end, title, pts: (pts===undefined?null:pts),
+    desc: opts.desc || null, tag: opts.tag || [], cat: opts.cat || null };
+}
+function pick(age,yText,oText){ return age==="y" ? yText : oText; }
+
+function commonMorning(age){
+  return [
+    t("08:00","08:15","Подъём",5,{desc:"Кровать, умывание, стакан воды, телефон не трогать"}),
+    t("08:15","08:40","Зарядка",10,{desc:pick(age,"Зарядка, скакалка","Пробежка, турник")}),
+    t("08:40","09:00","Завтрак",5,{desc:pick(age,"Завтрак, убрать за собой","Завтрак, приготовить самому, убрать за собой")})
+  ];
+}
+function englishMorning(age){
+  return [
+    t("09:00","09:40","Подготовка к английскому",10),
+    t("09:40","10:00","Дорога на английский",5,{desc:"Телефон в рюкзаке"}),
+    t("10:00","11:30","Английский",15,{cat:"english"}),
+    t("11:30","12:00","Дорога домой и прогулка",5),
+    t("12:00","13:00","Домашнее задание",15,{desc:pick(age,"Письменное домашнее задание","Письменное домашнее задание, таймер 25/5")})
+  ];
+}
+function sectionMorning(age){
+  return [
+    t("09:00","10:00","Домашнее задание",15,{desc:"Самое трудное задание"}),
+    t("10:00","11:30","Секция или кружок",15,{desc:"Утренняя группа. Отвезти может папа", cat:"sport"}),
+    t("11:30","12:00","Перекус и отдых",5,{desc:"Без экрана"}),
+    t("12:00","13:00","Домашнее задание и проект",15)
+  ];
+}
+function schoolBlock(){
+  return [
+    t("13:00","13:30","Обед",5,{desc:"Без телевизора и телефона"}),
+    t("13:30","14:00","Сборы и дорога в школу",5),
+    t("14:00","19:00","Школа",10,{cat:"school"})
+  ];
+}
+function bedtime(age){
+  return [
+    t("21:30","21:45","Подготовка ко сну",10,{desc:"Гаджеты на зарядку вне спальни"}),
+    t("21:45","22:00","Чтение",5,{desc:pick(age,"Чтение бумажной книги","Чтение бумажной книги или дневник «три дела, которыми горжусь»")}),
+    t("22:00","—","Сон",null,{cat:"sleep"})
+  ];
+}
+function momEvening(){
+  return [
+    t("19:00","19:30","Дорога домой",5),
+    t("19:30","20:00","Ужин с мамой",10,{desc:"Без телефонов", tag:["мама"]}),
+    t("20:00","20:30","Дела по дому и устные уроки",10),
+    t("20:30","21:15","Хобби или чтение",10),
+    t("21:15","21:30","Звонок папе",5,{desc:"Не считается экранным временем", tag:["папа"]})
+  ];
+}
+function kidsLunchText(kids){
+  return kids==="none" ? "Помочь накрыть на стол и приготовить простое блюдо" :
+         kids==="young" ? "Помочь накрыть на стол; присматривать за младшими не обязанность сына" :
+         "Помочь с обедом вместе с другими ребятами";
+}
+function kidsFamilyText(kids){
+  return kids==="none" ? "Прогулка, парк, каток, настольная игра со всеми" :
+         kids==="young" ? "Сын может научить младших чему-то своему, если хочет" :
+         "Найти общее дело с ровесниками";
+}
+function dadEvening(kids){
+  return [
+    t("19:00","19:30","Папа забирает из школы",5,{tag:["папа"]}),
+    t("19:30","20:00","Ужин в папиной семье",10,{desc:kidsLunchText(kids), tag:["папина семья"]}),
+    t("20:00","20:30","Устные уроки с папой",10,{desc:"Папа проверяет дневник", tag:["папа"]}),
+    t("20:30","21:00","Время вдвоём с папой",10,{desc:"Только сын и папа", tag:["папа"]}),
+    t("21:00","21:30","Папа привозит домой",5,{desc:"Рюкзак собран заранее", tag:["папа"]})
+  ];
+}
+function satMom(age){
+  return [
+    t("08:00","08:30","Подъём",5),
+    t("08:30","09:00","Зарядка с мамой",10,{tag:["мама"]}),
+    t("09:00","09:30","Завтрак, помочь приготовить",10),
+    t("09:30","10:30","Уборка своей комнаты",15),
+    t("10:30","12:30","Секция или кружок",15,{cat:"sport"}),
+    t("12:30","13:30","Готовим обед вместе",10,{tag:["мама"]}),
+    t("13:30","17:00","Выход с мамой",15,{desc:"Музей, парк, каток, бабушка", tag:["мама"]}),
+    t("17:00","18:30","Друзья вживую",5),
+    t("18:30","19:30","Экранное время по баллам",null,{cat:"screen"}),
+    t("19:30","20:00","Ужин",5),
+    t("20:00","21:00","Настольная игра",10,{tag:["мама"]}),
+    t("21:00","21:30","Хобби и звонок папе",5,{tag:["папа"]}),
+    ...bedtime(age)
+  ];
+}
+function sunMom(age){
+  return [
+    t("08:00","08:30","Подъём",5),
+    t("08:30","09:00","Зарядка",10),
+    t("09:00","09:30","Завтрак",5),
+    t("09:30","11:30","Доброе дело",15,{desc:pick(age,"Помощь бабушке, приют, волонтёрство","Помощь бабушке, приют, волонтёрство, подработка с согласия родителей")}),
+    t("11:30","13:00","Творчество",10),
+    t("13:00","14:00","Обед",5),
+    t("14:00","15:30","Прогулка на природе",10),
+    t("15:30","16:30","Подготовка к понедельнику",10),
+    t("16:30","17:30","Свой проект",10),
+    t("17:30","18:30","Экранное время по баллам",null,{cat:"screen"}),
+    t("18:30","19:00","Ужин",5,{tag:["мама"]}),
+    t("19:00","19:45","Планирование недели",15,{desc:"Папа по видеозвонку"}),
+    t("19:45","21:30","Семейный вечер",5,{desc:"Общий фильм, чтение, игра"}),
+    ...bedtime(age)
+  ];
+}
+function dadWeekend(day, overnightNext, overnightPrev, kids, age){
+  const list = [
+    t("08:00","08:30","Подъём",5),
+    t("08:30","09:00","Зарядка",10,{desc:"Можно с папой"}),
+    t("09:00","09:30","Завтрак",5)
+  ];
+  if(day==="sun" && overnightPrev){
+    list.push(t("09:30","10:00","Своё место у папы",10,{desc:"Убрать свои вещи, помочь по дому наравне со всеми", tag:["папа","папина семья"]}));
+  } else {
+    list.push(t("09:30","10:00","Сборы к папе",10,{desc:"Рюкзак собирает сам", tag:["папа"]}));
+  }
+  if(day==="sat"){
+    list.push(t("10:00","12:00","Секция",15,{desc:"Папа отвозит и смотрит", tag:["папа"], cat:"sport"}));
+  } else {
+    list.push(t("10:00","12:00","Тренировка с папой",15,{tag:["папа"], cat:"sport"}));
+  }
+  list.push(t("12:00","13:00","Обед в папиной семье",10,{desc:kidsLunchText(kids), tag:["папина семья"]}));
+  list.push(t("13:00","15:00","Время вдвоём с папой",15,{desc:"Рыбалка, мастерская, музей, поход, разговор", tag:["папа"]}));
+  list.push(t("15:00","17:00","Вместе с папиной семьёй",10,{desc:kidsFamilyText(kids), tag:["папина семья"]}));
+  if(day==="sat") list.push(t("17:00","18:30","Друзья или своё время",5));
+  else list.push(t("17:00","18:30","Уроки на понедельник",10));
+  list.push(t("18:30","19:30","Экранное время по баллам",null,{desc:"Лимит как у мамы", cat:"screen"}));
+  list.push(t("19:30","20:00","Ужин в папиной семье",5,{tag:["папина семья"]}));
+  if(day==="sat" && overnightNext){
+    list.push(t("20:00","21:30","Вечер у папы",15,{tag:["папа"]}));
+  } else {
+    list.push(t("20:00","20:30","Возвращение к маме",5));
+    list.push(day==="sat" ? t("20:30","21:00","Хобби",10) : t("20:30","21:30","Планирование недели",15,{desc:"С мамой и папой на видеосвязи"}));
+  }
+  list.push(...bedtime(age));
+  return list;
+}
+
+function isDadWeekendDay(date, dow, settings){
+  if(settings.wkDays==="none") return false;
+  if(dow==="sat" && !(settings.wkDays==="sat"||settings.wkDays==="both")) return false;
+  if(dow==="sun" && !(settings.wkDays==="sun"||settings.wkDays==="both")) return false;
+  if(settings.wkFreq==="every") return true;
+  const wk = isoWeekNumber(date);
+  return settings.wkFreq==="even" ? (wk%2===0) : (wk%2===1);
+}
+function buildWeekdaySchedule(dayIdx, settings){
+  const age = settings.age;
+  const tasks = [...commonMorning(age)];
+  if(dayIdx===0||dayIdx===2||dayIdx===4) tasks.push(...englishMorning(age));
+  else tasks.push(...sectionMorning(age));
+  tasks.push(...schoolBlock());
+  const isDad = settings.dadDays.includes(dayIdx);
+  tasks.push(...(isDad ? dadEvening(settings.kids) : momEvening()));
+  tasks.push(...bedtime(age));
+  return { tasks, location: isDad ? "с папой" : "у мамы", dayType: (dayIdx===0||dayIdx===2||dayIdx===4) ? "будний день с английским" : "будний день с секцией" };
+}
+function buildWeekendSchedule(date, dow, settings){
+  const age = settings.age;
+  const isDad = isDadWeekendDay(date, dow, settings);
+  if(!isDad){
+    return { tasks: dow==="sat" ? satMom(age) : sunMom(age), location:"у мамы", dayType:"выходной" };
+  }
+  const overnightBoth = settings.wkDays==="both";
+  if(dow==="sat"){
+    return { tasks: dadWeekend("sat", overnightBoth, false, settings.kids, age), location:"с папой", dayType:"выходной" };
+  }
+  return { tasks: dadWeekend("sun", false, overnightBoth, settings.kids, age), location:"с папой", dayType:"выходной" };
+}
+function buildDaySchedule(date, settings){
+  const dow = date.getDay();
+  if(dow>=1 && dow<=5) return buildWeekdaySchedule(dow-1, settings);
+  if(dow===6) return buildWeekendSchedule(date,"sat",settings);
+  return buildWeekendSchedule(date,"sun",settings);
+}
+function isDadDate(date, settings){
+  const dow = date.getDay();
+  if(dow>=1 && dow<=5) return settings.dadDays.includes(dow-1);
+  if(dow===6) return isDadWeekendDay(date,"sat",settings);
+  if(dow===0) return isDadWeekendDay(date,"sun",settings);
+  return false;
+}
+
+/* ===================== POINTS / BALANCE ===================== */
+function dayPts(dateKey){ return (state.days[dateKey] && state.days[dateKey].pts) || 0; }
+function logSum(){ return state.log.reduce((s,e)=>s+e.v,0); }
+function totalBalance(){
+  let s = 0;
+  for(const k in state.days) s += (state.days[k].pts||0);
+  s += logSum();
+  return s;
+}
+function computeDay(dateKey, settings){
+  const sched = buildDaySchedule(new Date(dateKey+"T00:00:00"), settings);
+  const doneArr = (state.days[dateKey] && state.days[dateKey].done) || [];
+  const withPts = sched.tasks.filter(x=>x.pts!=null);
+  let sum = 0, doneCount = 0;
+  withPts.forEach(task=>{
+    const key = task.start+"|"+task.title;
+    if(doneArr.includes(key)){ sum += task.pts; doneCount++; }
+  });
+  let bonus = false;
+  if(withPts.length>0 && doneCount/withPts.length >= 0.8){ sum += 20; bonus = true; }
+  return { sched, doneArr, withPts, doneCount, sum, bonus };
+}
+function toggleTask(dateKey, task, settings){
+  if(!state.days[dateKey]) state.days[dateKey] = { done:[], pts:0 };
+  const key = task.start+"|"+task.title;
+  const arr = state.days[dateKey].done;
+  const idx = arr.indexOf(key);
+  if(idx>=0) arr.splice(idx,1); else arr.push(key);
+  const result = computeDay(dateKey, settings);
+  state.days[dateKey].pts = result.sum;
+  saveState();
+}
+
+/* ===================== RENDER: HEADER SWITCHES ===================== */
+function renderSwitches(){
+  document.querySelectorAll('#ageSwitch button').forEach(b=>{
+    b.setAttribute('aria-pressed', b.dataset.age===state.settings.age ? "true":"false");
+  });
+  document.querySelectorAll('#roleSwitch button').forEach(b=>{
+    b.setAttribute('aria-pressed', b.dataset.role===role ? "true":"false");
+  });
+  document.getElementById('balTotal').textContent = totalBalance();
+  document.getElementById('balToday').textContent = dayPts(todayKey);
+}
+document.getElementById('ageSwitch').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  state.settings.age = b.dataset.age; saveState();
+  renderAll();
+});
+document.getElementById('roleSwitch').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  role = b.dataset.role; saveRole(role);
+  renderAll();
+});
+
+/* ===================== TABS ===================== */
+const TAB_IDS = ["sched","ideas","points","parents","meth"];
+function selectTab(id){
+  TAB_IDS.forEach(tid=>{
+    document.getElementById('tab-'+tid).classList.toggle('active', tid===id);
+    document.getElementById('tab-btn-'+tid).setAttribute('aria-selected', tid===id ? "true":"false");
+  });
+}
+document.getElementById('tabbar').addEventListener('click', e=>{
+  const b = e.target.closest('button[role="tab"]'); if(!b) return;
+  selectTab(b.id.replace('tab-btn-',''));
+});
+document.getElementById('tabbar').addEventListener('keydown', e=>{
+  if(!['ArrowLeft','ArrowRight'].includes(e.key)) return;
+  const btns = Array.from(document.querySelectorAll('#tabbar button'));
+  const i = btns.indexOf(document.activeElement);
+  if(i<0) return;
+  const next = e.key==='ArrowRight' ? (i+1)%btns.length : (i-1+btns.length)%btns.length;
+  btns[next].focus(); btns[next].click();
+});
+
+/* ===================== RENDER: SCHEDULE TAB ===================== */
+function renderDaySelect(){
+  const mon = startOfWeek(today);
+  const wrap = document.getElementById('daySelect');
+  wrap.innerHTML = "";
+  if(!selectedDateKey) selectedDateKey = todayKey;
+  for(let i=0;i<7;i++){
+    const d = addDays(mon,i);
+    const key = dkey(d);
+    const isToday = key===todayKey;
+    const isSelected = key===selectedDateKey;
+    const dad = isDadDate(d, state.settings);
+    const b = document.createElement('button');
+    b.dataset.key = key;
+    b.setAttribute('aria-current', isSelected ? "true":"false");
+    if(dad) b.classList.add('dadday');
+    b.innerHTML = '<span class="dname">'+WD_SHORT[i]+'</span><span class="dnum">'+d.getDate()+'</span>'+(isToday?'<span class="dot" aria-hidden="true"></span>':'');
+    b.setAttribute('aria-label', WD_SHORT[i]+' '+d.getDate()+(isToday?' сегодня':'')+(dad?' папин день':''));
+    wrap.appendChild(b);
+  }
+}
+document.getElementById('daySelect').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  selectedDateKey = b.dataset.key;
+  renderSchedule();
+  renderDaySelect();
+});
+
+function catLabel(cat){
+  return {school:"школа", english:"английский", sport:"спорt", free:"свободное время", screen:"экранное время", sleep:"сон"}[cat] || "";
+}
+function tagClass(tag){
+  if(tag==="мама") return "mom";
+  if(tag==="папа") return "dad";
+  return "famdad";
+}
+function renderSchedule(){
+  const d = new Date(selectedDateKey+"T00:00:00");
+  const info = computeDay(selectedDateKey, state.settings);
+  const sched = info.sched;
+  document.getElementById('dayTitle').textContent = WD_SHORT[(d.getDay()+6)%7]+", "+fmtLong(d);
+  document.getElementById('dayType').textContent = sched.dayType;
+  document.getElementById('dayLoc').textContent = sched.location;
+
+  const pct = info.withPts.length ? Math.round(info.doneCount/info.withPts.length*100) : 0;
+  document.getElementById('progressBar').style.width = pct+"%";
+  document.getElementById('sumDone').textContent = info.doneCount+"/"+info.withPts.length;
+  document.getElementById('sumPts').textContent = info.sum;
+  const need = Math.ceil(info.withPts.length*0.8);
+  document.getElementById('sumBonus').textContent = info.bonus ? "Бонус +20 получен ✓" : ("До бонуса +20: ещё "+Math.max(0,need-info.doneCount)+" дел");
+
+  const tl = document.getElementById('timeline');
+  tl.innerHTML = "";
+  sched.tasks.forEach(task=>{
+    const key = task.start+"|"+task.title;
+    const checkable = task.pts!=null;
+    const done = checkable && info.doneArr.includes(key);
+    const div = document.createElement('div');
+    div.className = "task" + (task.cat ? " cat-"+task.cat : "") + (done ? " done":"");
+    const checkboxHtml = checkable
+      ? '<input type="checkbox" class="chk" '+(done?'checked':'')+' aria-label="Сделано: '+task.title+'" data-key="'+key+'">'
+      : '<span style="width:22px;flex:0 0 auto;"></span>';
+    div.innerHTML =
+      checkboxHtml +
+      '<span class="time">'+task.start+(task.end&&task.end!=="—" ? '–'+task.end : '')+'</span>'+
+      '<span class="body">'+
+        '<span class="title-row"><span class="title">'+task.title+'</span>'+
+          '<span class="pts">'+(task.pts!=null ? ('<b>+'+task.pts+'</b>') : (task.cat?catLabel(task.cat):'—'))+'</span></span>'+
+        (task.desc ? '<div class="desc">'+task.desc+'</div>' : '') +
+        (task.tag && task.tag.length ? '<div class="tags">'+task.tag.map(tg=>'<span class="pill '+tagClass(tg)+'">'+tg+'</span>').join('')+'</div>' : '') +
+      '</span>';
+    tl.appendChild(div);
+  });
+  tl.querySelectorAll('.chk').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      const task = sched.tasks.find(x => (x.start+"|"+x.title) === cb.dataset.key);
+      toggleTask(selectedDateKey, task, state.settings);
+      renderSchedule();
+      renderDaySelect();
+      renderSwitches();
+    });
+  });
+}
+
+/* ===================== RENDER: IDEAS TAB ===================== */
+const DIRECTIONS = [
+  { name:"Спорт", y:["Плавание","Футбол","Хоккей","Единоборства","Гимнастика","Лёгкая атлетика"], o:["Бокс","Скалолазание","Зал с тренером","Бег","Командные игры"], where:"ДЮСШ, бассейны, фитнес-центры" },
+  { name:"Творчество", y:["Рисование","Музыкальная школа","Театр","Барабаны","Гитара"], o:["Музыка","Фотография","Дизайн","Ораторское мастерство","Столярка"], where:"Дома творчества, музыкальные школы, ДК" },
+  { name:"Наука и техника", y:["Робототехника","Шахматы","Юный химик","Моделизм"], o:["Олимпиады","Arduino","Программирование","3D-моделирование"], where:"Кванториумы, технопарки, кружки при вузах" },
+  { name:"Люди и мир", y:["Турклуб","Приют для животных с родителем","Библиотека"], o:["Волонтёрство","Подработка с 14 лет","Дебаты","Вожатый"], where:"Волонтёрские и молодёжные центры" },
+  { name:"Дом и самостоятельность", y:["Готовка","Питомец","Растения","Мелкий ремонт"], o:["Ужин для семьи","Личный бюджет","Ремонт","Планирование поездок"], where:"Оба дома" }
+];
+const DAD_TOGETHER = [
+  { name:"Руками", y:["Скворечник","Сборная модель","Ремонт велосипеда","Простая готовка"], o:["Ремонт техники и мебели","Инструменты","Серьёзная готовка","Совместный проект"] },
+  { name:"Движение", y:["Рыбалка","Велопоходы","Футбол","Каток"], o:["Зал","Походы с палаткой","Турник","Подготовка к забегу"] },
+  { name:"Голова и разговор", y:["Шахматы","Музей техники","Одна книга на двоих","Пазл"], o:["Разговоры о профессиях","Финансы","Планирование поездки"] }
+];
+const SHORT_IDEAS = {
+  "Головой":["Шахматная задача","Кроссворд или судоку","Выучить 5 слов на другом языке"],
+  "Руками":["Собрать что-то из конструктора","Навести порядок в ящике стола","Нарисовать скетч"],
+  "Телом":["20 приседаний и растяжка","Короткая прогулка во дворе","Скакалка 5 минут"],
+  "Для других":["Позвонить бабушке","Помочь по дому без просьбы","Написать записку близкому"]
+};
+function renderIdeas(){
+  const age = state.settings.age;
+  const dirWrap = document.getElementById('ideasDirections');
+  dirWrap.innerHTML = DIRECTIONS.map(dir=>
+    '<div class="dir-card card">'+
+      '<h4>'+dir.name+'</h4>'+
+      '<div class="agelbl">'+(age==="y"?"10–13 лет":"14–18 лет")+'</div>'+
+      '<ul>'+(age==="y"?dir.y:dir.o).map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+      '<div class="where">Где искать: '+dir.where+'</div>'+
+    '</div>'
+  ).join('');
+
+  const dadWrap = document.getElementById('ideasDad');
+  dadWrap.innerHTML = DAD_TOGETHER.map(d=>
+    '<div class="dir-card card">'+
+      '<h4>'+d.name+'</h4>'+
+      '<div class="agelbl">'+(age==="y"?"10–13 лет":"14–18 лет")+'</div>'+
+      '<ul>'+(age==="y"?d.y:d.o).map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+    '</div>'
+  ).join('');
+
+  const shortWrap = document.getElementById('ideasShort');
+  shortWrap.innerHTML = Object.keys(SHORT_IDEAS).map(cat=>
+    '<div class="dir-card card">'+
+      '<h4>'+cat+'</h4>'+
+      '<ul>'+SHORT_IDEAS[cat].map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+    '</div>'
+  ).join('');
+}
+
+/* ===================== RENDER: POINTS TAB ===================== */
+const REWARDS = [
+  { id:"r30", title:"30 минут игр или видео", price:40, note:"В любом доме, не позже 21:30" },
+  { id:"rdinner", title:"Выбрать ужин или десерт", price:50, note:"У мамы или у папы" },
+  { id:"rlate", title:"Отбой на 30 минут позже", price:60, note:"Только в пятницу или субботу" },
+  { id:"rfree", title:"Освобождение от одной обязанности", price:70, note:"" },
+  { id:"rdad", title:"Выбрать занятие на папин день", price:100, note:"Выбирается занятие, не время: время с папой бывает и без баллов" },
+  { id:"rmovie", title:"Кино, батуты или квест", price:200, note:"" },
+  { id:"rfriends", title:"Друзья в гости или ночёвка", price:250, note:"По согласованию с родителем, у которого ночёвка" },
+  { id:"rwish", title:"Покупка из списка желаний", price:500, note:"Сумму согласуют оба родителя" },
+  { id:"rcash", title:"Карманные деньги", price:100, note:"Для 14+, единый курс у мамы и папы" }
+];
+const VIOLATIONS = [
+  { id:"vphone", title:"Телефон или планшет без разрешения", pen:20 },
+  { id:"vscreen", title:"Превышено экранное время", pen:20 },
+  { id:"vlie", title:"Ложь о выполненном деле", pen:30 },
+  { id:"vskip", title:"Пропуск занятия без причины", pen:30 }
+];
+function roleLabel(r){ return {m:"Мама",p:"Папа",s:"Сын"}[r]||r; }
+function addLog(n, v, fine){
+  state.log.unshift({ id:Date.now()+"_"+Math.random().toString(36).slice(2), t:todayKey, n, v, fine:!!fine, by:role });
+  if(state.log.length>500) state.log.length = 500;
+  saveState();
+}
+function todayFineSum(){
+  return state.log.filter(e=>e.fine && e.t===todayKey).reduce((s,e)=>s+Math.abs(e.v),0);
+}
+function renderShop(){
+  const bal = totalBalance();
+  document.getElementById('shopGrid').innerHTML = REWARDS.map(r=>
+    '<div class="shop-item">'+
+      '<div class="price">'+r.price+' б.</div>'+
+      '<div style="font-weight:600;">'+r.title+'</div>'+
+      (r.note ? '<div class="note">'+r.note+'</div>' : '') +
+      '<button class="btn" data-id="'+r.id+'" '+(bal<r.price?'disabled':'')+'>Обменять</button>'+
+    '</div>'
+  ).join('');
+  document.querySelectorAll('#shopGrid .btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const r = REWARDS.find(x=>x.id===b.dataset.id);
+      if(totalBalance() < r.price) return;
+      if(!confirm('Обменять '+r.price+' баллов на «'+r.title+'»?')) return;
+      addLog(r.title, -r.price, false);
+      renderAll();
+    });
+  });
+}
+function renderViolations(){
+  const fined = todayFineSum();
+  const atLimit = fined>=50;
+  document.getElementById('fineLimitNote').textContent = atLimit
+    ? "Сегодня уже списано "+fined+" баллов — дневной лимит 50 достигнут."
+    : "Списано сегодня: "+fined+" из 50 баллов в день.";
+  document.getElementById('violationsList').innerHTML = VIOLATIONS.map(v=>
+    '<div class="violation-item">'+
+      '<span>'+v.title+'</span>'+
+      '<span style="display:flex; align-items:center; gap:10px;">'+
+        '<span class="v">−'+v.pen+'</span>'+
+        '<button class="btn secondary" data-id="'+v.id+'" '+(atLimit?'disabled':'')+'>Отметить</button>'+
+      '</span>'+
+    '</div>'
+  ).join('');
+  document.querySelectorAll('#violationsList .btn').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      const v = VIOLATIONS.find(x=>x.id===b.dataset.id);
+      if(todayFineSum()>=50) return;
+      addLog(v.title, -v.pen, true);
+      renderAll();
+    });
+  });
+}
+function renderHistory(){
+  const items = state.log.slice(0,30);
+  document.getElementById('historyList').innerHTML = items.length ? items.map(e=>
+    '<div class="history-row">'+
+      '<span>'+e.n+'<div class="meta">'+e.t+' · '+roleLabel(e.by)+(e.fine?' · нарушение':' · награда')+'</div></span>'+
+      '<span class="amt '+(e.v>=0?'pos':'neg')+'">'+(e.v>=0?'+':'')+e.v+'</span>'+
+    '</div>'
+  ).join('') : '<p class="muted">Пока нет операций.</p>';
+}
+
+/* ===================== RENDER: PARENTS TAB ===================== */
+function renderParents(){
+  const s = state.settings;
+  const chips = document.getElementById('dadWeekdayChips');
+  chips.innerHTML = WD_SHORT.slice(0,5).map((name,i)=>
+    '<label class="chip-check"><input type="checkbox" data-idx="'+i+'" '+(s.dadDays.includes(i)?'checked':'')+'> '+name+'</label>'
+  ).join('');
+  chips.querySelectorAll('input').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+      const idx = +cb.dataset.idx;
+      const pos = s.dadDays.indexOf(idx);
+      if(cb.checked && pos<0) s.dadDays.push(idx);
+      if(!cb.checked && pos>=0) s.dadDays.splice(pos,1);
+      saveState(); renderAll();
+    });
+  });
+
+  const wkOpts = [["none","Без выходных у папы"],["sat","Суббота"],["sun","Воскресенье"],["both","Оба дня с ночёвкой"]];
+  document.getElementById('wkDaysRadio').innerHTML = wkOpts.map(([v,label])=>
+    '<label><input type="radio" name="wkDays" value="'+v+'" '+(s.wkDays===v?'checked':'')+'> '+label+'</label>'
+  ).join('');
+  document.querySelectorAll('input[name="wkDays"]').forEach(r=>{
+    r.addEventListener('change', ()=>{ s.wkDays=r.value; saveState(); renderAll(); });
+  });
+
+  document.getElementById('wkFreqBlock').style.display = s.wkDays==="none" ? "none" : "block";
+  const freqOpts = [["every","Каждую неделю"],["even","Через неделю (чётные недели)"],["odd","Через неделю (нечётные недели)"]];
+  document.getElementById('wkFreqRadio').innerHTML = freqOpts.map(([v,label])=>
+    '<label><input type="radio" name="wkFreq" value="'+v+'" '+(s.wkFreq===v?'checked':'')+'> '+label+'</label>'
+  ).join('');
+  document.querySelectorAll('input[name="wkFreq"]').forEach(r=>{
+    r.addEventListener('change', ()=>{ s.wkFreq=r.value; saveState(); renderAll(); });
+  });
+  const wk = isoWeekNumber(today);
+  const mon = startOfWeek(today);
+  const sat = addDays(mon,5);
+  const satIsDad = isDadWeekendDay(sat, "sat", s) || isDadWeekendDay(addDays(mon,6),"sun",s);
+  document.getElementById('wkInfo').textContent = "Сейчас неделя №"+wk+" (ISO). Ближайшие выходные: "+(satIsDad?"с папой":"с мамой")+".";
+
+  const kidsOpts = [["none","Других детей нет"],["young","Есть дети младше"],["peers","Есть ровесники или старше"]];
+  document.getElementById('kidsRadio').innerHTML = kidsOpts.map(([v,label])=>
+    '<label><input type="radio" name="kids" value="'+v+'" '+(s.kids===v?'checked':'')+'> '+label+'</label>'
+  ).join('');
+  document.querySelectorAll('input[name="kids"]').forEach(r=>{
+    r.addEventListener('change', ()=>{ s.kids=r.value; saveState(); renderAll(); });
+  });
+
+  const notesCard = document.getElementById('notesCard');
+  if(role==="s"){
+    notesCard.innerHTML = '<h3>Заметки для родителей</h3><p class="muted">Заметки родителей недоступны для роли «Сын».</p>';
+  } else {
+    if(!document.getElementById('notesList')){
+      notesCard.innerHTML = '<h3>Заметки для родителей</h3><div id="notesList"></div><div id="notesForm">'+
+        '<textarea id="noteText" maxlength="2000" placeholder="Оценки, здоровье, договорённости, изменения планов..." aria-label="Текст заметки"></textarea>'+
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">'+
+        '<span class="muted" id="noteCounter">0 / 2000</span><button class="btn" id="addNoteBtn">Добавить заметку</button></div></div>';
+    }
+    document.getElementById('notesList').innerHTML = state.notes.length ? state.notes.slice().reverse().map(n=>
+      '<div class="note-item"><div class="who">'+roleLabel(n.from)+'<span class="when">'+n.t+'</span></div><div>'+escapeHtml(n.text)+'</div></div>'
+    ).join('') : '<p class="muted">Заметок пока нет.</p>';
+    const ta = document.getElementById('noteText');
+    const counter = document.getElementById('noteCounter');
+    ta.addEventListener('input', ()=>{ counter.textContent = ta.value.length+" / 2000"; });
+    document.getElementById('addNoteBtn').addEventListener('click', ()=>{
+      const text = ta.value.trim();
+      if(!text) return;
+      state.notes.push({ id:Date.now()+"_"+Math.random().toString(36).slice(2), t:new Date().toLocaleString('ru-RU'), from:role, text });
+      saveState();
+      renderParents();
+    });
+  }
+}
+function escapeHtml(s){
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  if(!confirm("Сбросить все отметки, обмены и нарушения? Настройки и заметки сохранятся.")) return;
+  state.days = {};
+  state.log = [];
+  saveState();
+  renderAll();
+});
+
+/* ===================== RENDER: METHODOLOGY TAB ===================== */
+const METH_SECTIONS = [
+  { title:"Два дома, одни правила", open:true, body:
+    '<ol>'+
+      '<li>Одинаковые правила у мамы и у папы: отбой, экран, уроки, обязанности.</li>'+
+      '<li>Один счёт баллов и один магазин наград. Никто не «перекупает» сына и не отменяет решения другого родителя.</li>'+
+      '<li>Время с мамой и папой никогда не награда и не наказание. Звонок папе не экранное время.</li>'+
+      '<li>Последствие назначает тот, при ком случилось нарушение, и сразу. Никаких «вот приедет папа и разберётся».</li>'+
+      '<li>Не обсуждать другого родителя плохо при сыне и не делать сына посыльным.</li>'+
+      '<li>Спокойный переход между домами: сын собирает рюкзак сам, необходимые вещи есть в обоих домах, после возвращения без допросов.</li>'+
+      '<li>Еженедельный 15-минутный разговор родителей. При трудностях можно обратиться к семейному медиатору или психологу.</li>'+
+    '</ol>' },
+  { title:"Новая семья папы", body:
+    '<ol>'+
+      '<li>Обязательное время вдвоём с папой в каждый папин день, без других членов семьи.</li>'+
+      '<li>Своё место в папином доме: кровать, полка, вещи. Участие в делах наравне со всеми, не как гость и не как прислуга.</li>'+
+      '<li>Воспитывает папа, а не его жена или партнёр. Бытовые правила дома сын соблюдает, но последствия по системе назначает папа.</li>'+
+      '<li>Сын не няня для младших детей.</li>'+
+      '<li>Без сравнений с другими детьми: «у тебя свой счёт и свои награды».</li>'+
+      '<li>Сын имеет право хорошо относиться к новой семье. Мама не ставит его перед выбором, папа не говорит плохо о маме.</li>'+
+      '<li>Отношения складываются постепенно, без требований называть нового взрослого мамой или «дружить».</li>'+
+      '<li>Праздники и каникулы планируются заранее.</li>'+
+    '</ol>' },
+  { title:"Общие принципы", body:
+    '<ol>'+
+      '<li>Расписание составляется вместе с сыном.</li>'+
+      '<li>Цель — управление экраном, а не полный запрет.</li>'+
+      '<li>30–60 минут свободного времени в день без гаджетов.</li>'+
+      '<li>Похвал в 4–5 раз больше, чем замечаний, конкретно и сразу.</li>'+
+      '<li>Последствия логичные и известные заранее.</li>'+
+      '<li>Родители соблюдают те же правила по телефонам.</li>'+
+    '</ol>' },
+  { title:"Поощрения по возрастам", body:
+    '<table><tr><th>Вид</th><th>10–13 лет</th><th>14–18 лет</th></tr>'+
+    '<tr><td>Слова и внимание</td><td>Похвала при других, «расскажу папе»</td><td>Признание, доверие, просьба о совете</td></tr>'+
+    '<tr><td>Выбор</td><td>Занятие на папин день, ужин, фильм</td><td>Спланировать выходной, маршрут поездки с папой</td></tr>'+
+    '<tr><td>Впечатления</td><td>Кино, батуты, зоопарк, квест</td><td>Концерт, квест с друзьями, мастер-класс</td></tr>'+
+    '<tr><td>Материальное</td><td>Покупка из списка, согласованная обоими</td><td>Карманные деньги по единому курсу</td></tr>'+
+    '<tr><td>Экранное время</td><td>Только за баллы, по 30 минут</td><td>За баллы, сам решает когда, до 21:30</td></tr></table>' },
+  { title:"Лестница последствий", body:
+    '<ol><li>Напоминание без упрёка.</li><li>Выбор: «убрать сейчас или потерять 30 минут экрана».</li>'+
+    '<li>Последствие спокойно, без крика.</li><li>Разговор позже, когда все остыли.</li></ol>' },
+  { title:"Типичные нарушения", body:
+    '<table><tr><th>Ситуация</th><th>Логичное последствие</th></tr>'+
+    '<tr><td>Не сделал уроки</td><td>Сначала уроки, экран недоступен до готовности</td></tr>'+
+    '<tr><td>Телефон без разрешения</td><td>−20 баллов, телефон на полку до вечера</td></tr>'+
+    '<tr><td>Превысил экранное время</td><td>Завтра на столько же меньше, в любом доме</td></tr>'+
+    '<tr><td>Не убрал за собой</td><td>Убрать сейчас, приятное дело после</td></tr>'+
+    '<tr><td>Опоздал без звонка</td><td>Следующая прогулка короче</td></tr>'+
+    '<tr><td>«А папа (мама) разрешает»</td><td>«Правила общие, я уточню», затем уточнить через заметки</td></tr>'+
+    '<tr><td>Ссора в папиной семье</td><td>Разбирается папа, выслушав обе стороны, без сравнений и без отмены папиного дня</td></tr>'+
+    '<tr><td>Не хочет ехать к папе</td><td>Не нарушение, а сигнал: спросить без давления, обсудить в заметках, добавить время вдвоём</td></tr>'+
+    '<tr><td>Грубость</td><td>Пауза, затем извинение, баллы не списываются</td></tr></table>' },
+  { title:"Чего не делать", body:
+    '<p>Нельзя: кричать, унижать, сравнивать с другими детьми; применять физические наказания; лишать еды, сна, общения с другим родителем или друзьями; наказывать учёбой и спортом; отбирать все накопленные баллы разом.</p>'+
+    '<p>Признаки, требующие внимания: потеря интереса ко всему, плохой сон, замкнутость, тяжёлые переживания из-за переходов между домами или новой семьи папы. В таких случаях нужен спокойный разговор, а при необходимости школьный или семейный психолог.</p>' },
+  { title:"Запуск системы", body:
+    '<ol><li>Родители вдвоём договариваются о правилах и ценах наград.</li>'+
+    '<li>Вместе показывают систему сыну.</li><li>Первая неделя: только поощрения.</li>'+
+    '<li>Со второй недели включаются последствия.</li><li>Через месяц пересмотр баллов и расписания втроём.</li></ol>' }
+];
+function renderMethodology(){
+  document.getElementById('methWrap').innerHTML = METH_SECTIONS.map(sec=>
+    '<details class="meth" '+(sec.open?'open':'')+'><summary>'+sec.title+'</summary><div class="body">'+sec.body+'</div></details>'
+  ).join('');
+}
+
+/* ===================== RENDER ALL ===================== */
+function renderAll(){
+  renderSwitches();
+  renderDaySelect();
+  renderSchedule();
+  renderIdeas();
+  renderShop();
+  renderViolations();
+  renderHistory();
+  renderParents();
+}
+renderMethodology();
+renderAll();
+
+})();
+</script>
+</body>
+</html>
